@@ -1,0 +1,13 @@
+frontend buymed-frontend
+        bind *:6443
+        mode tcp
+        option tcplog
+        default_backend buymed-backend
+backend buymed-backend
+        mode tcp
+        option tcp-check
+        balance roundrobin
+        default-server inter 3s fall 3 rise 2
+        server buymed-k8s-master-01 11.5.0.11:6443 check
+        server buymed-k8s-master-02 11.5.0.12:6443 check
+        server buymed-k8s-master-03 11.5.0.13:6443 check
